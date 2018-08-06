@@ -18,15 +18,15 @@ if ($action !== null) {
         
         $erreur = true;
         
-        
+        //$l = name; $q = quantity; $p = weight;
         $l = (isset($_POST['l']) ? $_POST['l'] : (isset($_GET['l']) ? $_GET['l'] : null));
         $q = (isset($_POST['q']) ? $_POST['q'] : (isset($_GET['q']) ? $_GET['q'] : null));
         $p = (isset($_POST['p']) ? $_POST['p'] : (isset($_GET['p']) ? $_GET['p'] : null));
-        
+        //retrait des espaces
         $l = preg_replace('#\v#', '', $l);
-        
+        //verif float
         $p = floatval($p);
-        
+        //soit tableau soit entier
         if (is_array($q)) {
             
             $amountarticle = array();
@@ -47,7 +47,7 @@ if ($action !== null) {
 if (! $erreur) {
     
     switch ($action) {
-        
+        //add article
         Case "add":
             $l = (isset($_POST['l']) ? $_POST['l'] : (isset($_GET['l']) ? $_GET['l'] : null));
             $q = (isset($_POST['q']) ? $_POST['q'] : (isset($_GET['q']) ? $_GET['q'] : null));
@@ -57,13 +57,13 @@ if (! $erreur) {
             addarticle($l, $q, $p);
             
             break;
-            
+            //delete article
         Case "delete":
             
             deletearticle($l);
             
             break;
-            
+            //modify
         Case "refresh":
             
             for ($i = 0; $i < count($amountarticle); $i ++){
@@ -95,7 +95,7 @@ if (! $erreur) {
             <td>Action</td>
         </tr>
         <?php
-
+//delete panier
 if (isset($_GET['deleteshopcart']) && $_GET['deleteshopcart'] == true) {
 
     deleteshopcart();

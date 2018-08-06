@@ -1,6 +1,6 @@
 <?php
 
-
+//creation panier
 function createcart()
 {
     if (! isset($_SESSION['shopcart'])) {
@@ -17,7 +17,7 @@ function createcart()
     
     return true;
 }
-
+//ajouter un article
 function addarticle($nameproduct, $amountproduct, $priceproduct)
 {
     if (createcart() && ! isLock()) {
@@ -39,7 +39,7 @@ function addarticle($nameproduct, $amountproduct, $priceproduct)
         echo "Erreur, veuillez contacter le vendeur.";
     }
 }
-
+//modifier un article
 function modifyamountarticle($nameproduct, $amountproduct)
 {
     if (createcart() && ! isLock()) {
@@ -54,14 +54,14 @@ function modifyamountarticle($nameproduct, $amountproduct)
             }
             
         } else {
-            
+           
             deletearticle($nameproduct);
         }
     } else {
         echo "Erreur, veuillez contacter le vendeur.";
     }
 }
-
+//delete article 
 function deletearticle($nameproduct)
 {
     if (createcart() && ! isLock()) {
@@ -91,7 +91,7 @@ function deletearticle($nameproduct)
         echo "Erreur, veuillez contacter le vendeur.";
     }
 }
-
+//calcul prix
 function pricetotal()
 {
     $_SESSION['shopcart'] = array();
@@ -107,7 +107,7 @@ function pricetotal()
     
     return $total;
 }
-
+//calcul prix avec tva
 //  function pricetotaltva()
 // {
 //     $bdd = new PDO('mysql:host=localhost;dbname=ecommerce', 'root', '');
@@ -142,6 +142,8 @@ function pricetotal()
 //     $_SESSION['shopcart']['tva'] = $data->tva;
 //     return $total + $total * $_SESSION['shopcart']['tva'] / 100;
 
+
+//supprimer panier
 function deleteshopcart()
 {
     if (isset($_SESSION['shopcart'])) {
@@ -149,7 +151,7 @@ function deleteshopcart()
         unset($_SESSION['shopcart']);
     }
 }
-
+//verouiller
 function isLock()
 
 {
@@ -163,7 +165,7 @@ function isLock()
         return false;
     }
 }
-
+//compteur d'article
 function counterarticle()
 {
     if (isset($_SESSION['shopcart'])) {

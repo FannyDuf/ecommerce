@@ -29,6 +29,8 @@ try {
 if (isset($_SESSION['Username'])) {
 
     if (isset($_GET['action'])) {
+        
+        //fonction ajout produit
 
         if ($_GET['action'] == 'add') {
 
@@ -43,7 +45,7 @@ if (isset($_SESSION['Username'])) {
 
                 $img_tmp = $_FILES['img']['tmp_name'];
                 $category = $_POST['category'];
-
+                //gestion image
                 if (! empty($img_tmp)) {
 
                     $image = explode('.', $img);
@@ -60,7 +62,7 @@ if (isset($_SESSION['Username'])) {
 
                         echo "Veuillez rentrer une image au format: png,jpg ou jpeg. ";
                     } else {
-
+                        //redimension image
                         $image_size = getimagesize($img_tmp);
 
                         if ($image_size['mime'] == 'image/jpeg') {
@@ -84,7 +86,7 @@ if (isset($_SESSION['Username'])) {
                                 $image_finale = $image_src;
                             } else {
                                 
-
+                            //enregistrement image
                                 $new_width = $image_width;
 
                                 $new_height = 200;
@@ -101,7 +103,7 @@ if (isset($_SESSION['Username'])) {
 
                     echo "Veuillez rentrer une image.";
                 }
-
+                    //suite ajout produit
                 if ($title && $description && $price && $stock) {
                     
                     $bdd = new PDO('mysql:host=localhost;dbname=ecommerce', 'root', '');
@@ -129,7 +131,6 @@ if (isset($_SESSION['Username'])) {
                     $final_price = $amountprice+($amountprice* $tva/100);
                     
                     $insert = $bdd->query("INSERT INTO produits VALUES(NULL, '$title', '$description', '$price', '$category', '$weight', '$shipping', '$tva', '$final_price', '$stock')");
-                    //$insert->execute();
                     // header('Location: ../admin/admin.php');
                 } else {
                     
@@ -189,6 +190,7 @@ if (isset($_SESSION['Username'])) {
 </form>
 
 <?php
+        //modifier et supprimer
         } else if ($_GET['action'] == 'modifyanddelete') {
 
             $select = $bdd->prepare("SELECT * FROM produits");
@@ -204,6 +206,7 @@ if (isset($_SESSION['Username'])) {
 <br>
 <?php
             }
+            //modification
         } else if ($_GET['action'] == 'modify') {
 
             $id = $_GET['id'];
@@ -240,11 +243,15 @@ if (isset($_SESSION['Username'])) {
 
                 header('Location: admin.php?action=modifyanddelete');
             }
+            
+            //suppression
         } else if ($_GET['action'] == 'delete') {
 
             $id = $_GET['id'];
             $delete = $bdd->prepare("DELETE FROM produits WHERE id=$id");
             $delete->execute();
+            
+            //ajout catégorie
         } else if ($_GET['action'] == 'addcat') {
 
             if (isset($_POST{'submit'})) {
@@ -270,6 +277,7 @@ if (isset($_SESSION['Username'])) {
 </form>
 
 <?php
+    //modifier et supprimer categorie
         } else if ($_GET['action'] == 'modifyanddeletecat') {
             
             $select = $bdd->prepare("SELECT * FROM category");
@@ -285,6 +293,8 @@ if (isset($_SESSION['Username'])) {
 <br>
 <?php
             }
+            
+            //modification categorie
         } else if ($_GET['action'] == 'modify_cat') {
 
             $id = $_GET['id'];
@@ -314,6 +324,7 @@ if (isset($_SESSION['Username'])) {
 
                 header('Location: admin.php?action=modifycat');
             }
+            //suppression categorie
         } else if ($_GET['action'] == 'deletecat') {
 
             $id = $_GET['id'];
@@ -321,7 +332,7 @@ if (isset($_SESSION['Username'])) {
             $delete->execute();
 
             header('Location: admin.php?action=modifyanddeletecat');
-        
+     //petites options calcul du frais de port par rapport au poids    
     }else if($_GET['action']=='options'){
          ?>
          
@@ -368,6 +379,7 @@ if (isset($_SESSION['Username'])) {
     
     <?php 
     
+    //modifier poids
     
     }else if($_GET['action']== 'modifyweight'){
         

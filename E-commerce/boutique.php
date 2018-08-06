@@ -2,6 +2,7 @@
 require_once ('includes/header.php');
 require_once ('includes/sidebar.php');
 
+//affichage
 if (isset($_GET['show'])) {
 
     $product = $_GET['show'];
